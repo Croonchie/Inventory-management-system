@@ -66,3 +66,4 @@ myStore.addProduct(eggs);
 
 console.log("Inventory Value Before Discount: $" + myStore.getInventoryValue().toFixed(2));
 
+Product.applyDiscount(myStore.inventory, 0.15);
