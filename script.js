@@ -24,3 +24,9 @@ toString() {
     return `${super.toString()}, Expiration Date: ${this.expirationDate}`;
   }
 }
+
+Product.applyDiscount = function (products, discount) {
+  products.forEach(product => {
+    product.price = product.price * (1 - discount);
+  });
+};
