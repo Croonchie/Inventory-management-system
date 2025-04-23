@@ -13,3 +13,9 @@ toString() {
     return `Product: ${this.name}, Price: $${this.price.toFixed(2)}, Quantity: ${this.quantity}`;
   }
 }
+
+class PerishableProduct extends Product {
+  constructor(name, price, quantity, expirationDate) {
+    super(name, price, quantity);
+    this.expirationDate = expirationDate;
+  }
