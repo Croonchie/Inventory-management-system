@@ -55,3 +55,5 @@ const book = new Product("Book", 15, 30);
 
 const milk = new PerishableProduct("Milk", 3.5, 10, "2025-05-01");
 const eggs = new PerishableProduct("Eggs", 2.5, 12, "2025-04-30");
+
+const myStore = new Store();
