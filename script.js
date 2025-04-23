@@ -63,3 +63,6 @@ myStore.addProduct(chair);
 myStore.addProduct(book);
 myStore.addProduct(milk);
 myStore.addProduct(eggs);
+
+console.log("Inventory Value Before Discount: $" + myStore.getInventoryValue().toFixed(2));
+
