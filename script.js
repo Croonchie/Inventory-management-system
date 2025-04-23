@@ -36,6 +36,11 @@ class Store {
     this.inventory = [];
   }
 
+findProductByName(name) {
+    return this.inventory.find(product => product.name === name) || null;
+  }
+}
+
 addProduct(product) {
     this.inventory.push(product);
   }
