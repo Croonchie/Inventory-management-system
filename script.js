@@ -69,3 +69,5 @@ console.log("Inventory Value Before Discount: $" + myStore.getInventoryValue().t
 Product.applyDiscount(myStore.inventory, 0.15);
 
 console.log("Inventory Value After 15% Discount: $" + myStore.getInventoryValue().toFixed(2));
+
+const foundProduct = myStore.findProductByName("Milk");
