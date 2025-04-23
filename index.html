@@ -2,34 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Inventory Management System</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Store Inventory Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 8px;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .highlight {
+      color: #2e7d32;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>Inventory Management System</h1>
-    
-    <div id="inventory-before" class="output-section">
-      <h2>Inventory Value Before Discount</h2>
-      <p id="value-before"></p>
+    <h1>Store Inventory Summary</h1>
+
+    <div class="section">
+      <p><span class="label">Total Inventory Value (Before Discount):</span> <span id="value-before" class="highlight"></span></p>
+      <p><span class="label">Total Inventory Value (After 15% Discount):</span> <span id="value-after" class="highlight"></span></p>
     </div>
 
-    <div id="inventory-after" class="output-section">
-      <h2>Inventory Value After 15% Discount</h2>
-      <p id="value-after"></p>
-    </div>
-
-    <div id="product-search" class="output-section">
-      <h2>Search Result</h2>
-      <p id="search-result"></p>
-    </div>
-
-    <div id="product-list" class="output-section">
-      <h2>Inventory Details</h2>
+    <div class="section">
+      <h2>Inventory List</h2>
       <ul id="inventory-list"></ul>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+    <div class="section">
+      <h2>Search Result for "Milk"</h2>
+      <p id="search-result" class="highlight"></p>
+    </div>
+  </div>
