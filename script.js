@@ -77,3 +77,6 @@ if (foundProduct) {
 } else {
   console.log("Product not found.");
 }
+
+console.log("\n--- Store Inventory ---");
+myStore.inventory.forEach(product => console.log(product.toString()));
