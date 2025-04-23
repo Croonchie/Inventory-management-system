@@ -48,3 +48,7 @@ addProduct(product) {
 getInventoryValue() {
     return this.inventory.reduce((total, product) => total + product.getTotalValue(), 0);
   }
+
+const laptop = new Product("Laptop", 1200, 5);
+const chair = new Product("Chair", 75, 20);
+const book = new Product("Book", 15, 30);
