@@ -5,12 +5,18 @@ class Product {
     this.quantity = quantity;
   }
 
-getTotalValue() {
+  getTotalValue() {
     return this.price * this.quantity;
   }
 
-toString() {
+  toString() {
     return `Product: ${this.name}, Price: $${this.price.toFixed(2)}, Quantity: ${this.quantity}`;
+  }
+
+  static applyDiscount(products, discount) {
+    products.forEach(product => {
+      product.price = product.price * (1 - discount);
+    });
   }
 }
 
@@ -20,63 +26,62 @@ class PerishableProduct extends Product {
     this.expirationDate = expirationDate;
   }
 
-toString() {
+  toString() {
     return `${super.toString()}, Expiration Date: ${this.expirationDate}`;
   }
 }
-
-Product.applyDiscount = function (products, discount) {
-  products.forEach(product => {
-    product.price = product.price * (1 - discount);
-  });
-};
 
 class Store {
   constructor() {
     this.inventory = [];
   }
 
-findProductByName(name) {
-    return this.inventory.find(product => product.name === name) || null;
-  }
-}
-
-addProduct(product) {
+  addProduct(product) {
     this.inventory.push(product);
   }
 
-getInventoryValue() {
+  getInventoryValue() {
     return this.inventory.reduce((total, product) => total + product.getTotalValue(), 0);
   }
 
-const laptop = new Product("Laptop", 1200, 5);
-const chair = new Product("Chair", 75, 20);
-const book = new Product("Book", 15, 30);
-
-const milk = new PerishableProduct("Milk", 3.5, 10, "2025-05-01");
-const eggs = new PerishableProduct("Eggs", 2.5, 12, "2025-04-30");
-
-const myStore = new Store();
-
-myStore.addProduct(laptop);
-myStore.addProduct(chair);
-myStore.addProduct(book);
-myStore.addProduct(milk);
-myStore.addProduct(eggs);
-
-console.log("Inventory Value Before Discount: $" + myStore.getInventoryValue().toFixed(2));
-
-Product.applyDiscount(myStore.inventory, 0.15);
-
-console.log("Inventory Value After 15% Discount: $" + myStore.getInventoryValue().toFixed(2));
-
-const foundProduct = myStore.findProductByName("Milk");
-
-if (foundProduct) {
-  console.log("Found Product:", foundProduct.toString());
-} else {
-  console.log("Product not found.");
+  findProductByName(name) {
+    return this.inventory.find(product => product.name.toLowerCase() === name.toLowerCase()) || null;
+  }
 }
 
-console.log("\n--- Store Inventory ---");
-myStore.inventory.forEach(product => console.log(product.toString()));
+// Initialize store and products
+const myStore = new Store();
+
+const products = [
+  new Product("Laptop", 1200, 5),
+  new Product("Chair", 75, 20),
+  new Product("Book", 15, 30),
+  new PerishableProduct("Milk", 3.5, 10, "2025-05-01"),
+  new PerishableProduct("Eggs", 2.5, 12, "2025-04-30")
+];
+
+products.forEach(p => myStore.addProduct(p));
+
+// Display before-discount value
+document.getElementById("value-before").textContent = 
+  `$${myStore.getInventoryValue().toFixed(2)}`;
+
+// Apply discount
+Product.applyDiscount(myStore.inventory, 0.15);
+
+// Display after-discount value
+document.getElementById("value-after").textContent = 
+  `$${myStore.getInventoryValue().toFixed(2)}`;
+
+// Display all inventory
+const inventoryList = document.getElementById("inventory-list");
+myStore.inventory.forEach(product => {
+  const li = document.createElement("li");
+  li.textContent = product.toString();
+  inventoryList.appendChild(li);
+});
+
+// Find a product and show result
+const searchProduct = myStore.findProductByName("Milk");
+const searchResult = document.getElementById("search-result");
+searchResult.textContent = searchProduct ? searchProduct.toString() : "Product not found.";
