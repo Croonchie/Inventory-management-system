@@ -1,0 +1,40 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  color: #333;
+  text-align: center;
+}
+
+.output-section {
+  margin-top: 30px;
+}
+
+#inventory-list {
+  list-style: none;
+  padding: 0;
+}
+
+#inventory-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #555;
+  text-align: center;
+}
