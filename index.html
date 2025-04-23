@@ -1,30 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Store Inventory Report</title>
-   <link rel="stylesheet" href="styles.css">
-  
+  <meta charset="UTF-8" />
+  <title>Store Inventory</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .highlight {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Store Inventory Summary</h1>
+    <p>Total Inventory Value (Before Discount): <span id="value-before"></span></p>
+    <p>Total Inventory Value (After 15% Discount): <span id="value-after"></span></p>
 
-    <div class="section">
-      <p><span class="label">Total Inventory Value (Before Discount):</span> <span id="value-before" class="highlight"></span></p>
-      <p><span class="label">Total Inventory Value (After 15% Discount):</span> <span id="value-after" class="highlight"></span></p>
-    </div>
+    <h3>Inventory List</h3>
+    <ul id="inventory-list"></ul>
 
-    <div class="section">
-      <h2>Inventory List</h2>
-      <ul id="inventory-list"></ul>
-    </div>
-
-    <div class="section">
-      <h2>Search Result for "Milk"</h2>
-      <p id="search-result" class="highlight"></p>
-    </div>
+    <h3>Search Result for "Milk"</h3>
+    <p id="search-result" class="highlight"></p>
   </div>
- <script src="script.js"></script>
+
+  <script>
+    class Product {
+      constructor(name, price, quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+      }
+      getTotalValue() {
+        return this.price * this.quantity;
+      }
+      toString() {
+        return `Product: ${this.name}, Price: $${this.price.toFixed(2)}, Quantity: ${this.quantity}`;
+      }
+      static applyDiscount(products, discount) {
+        products.forEach(product => {
+          product.price = product.price * (1 - discount);
+        });
+      }
+    }
+
+    class PerishableProduct extends Product {
+      constructor(name, price, quantity, expirationDate) {
+        super(name, price, quantity);
+        this.expirationDate = expirationDate;
+      }
+      toString() {
+        return `${super.toString()}, Expiration Date: ${this.expirationDate}`;
+      }
+    }
+
+    class Store {
+      constructor() {
+        this.inventory = [];
+      }
+      addProduct(product) {
+        this.inventory.push(product);
+      }
+      getInventoryValue() {
+        return this.inventory.reduce((total, product) => total + product.getTotalValue(), 0);
+      }
+      findProductByName(name) {
+        return this.inventory.find(product => product.name.toLowerCase() === name.toLowerCase()) || null;
+      }
+    }
+
+    // Initialize store and products
+    const myStore = new Store();
+
+    const products = [
+      new Product("Laptop", 1200, 5),
+      new Product("Chair", 75, 20),
+      new Product("Book", 15, 30),
+      new PerishableProduct("Milk", 3.5, 10, "2025-05-01"),
+      new PerishableProduct("Eggs", 2.5, 12, "2025-04-30")
+    ];
+
+    products.forEach(p => myStore.addProduct(p));
+
+    document.getElementById("value-before").textContent = `$${myStore.getInventoryValue().toFixed(2)}`;
+
+    Product.applyDiscount(myStore.inventory, 0.15);
+
+    document.getElementById("value-after").textContent = `$${myStore.getInventoryValue().toFixed(2)}`;
+
+    const inventoryList = document.getElementById("inventory-list");
+    myStore.inventory.forEach(product => {
+      const li = document.createElement("li");
+      li.textContent = product.toString();
+      inventoryList.appendChild(li);
+    });
+
+    const searchProduct = myStore.findProductByName("Milk");
+    const searchResult = document.getElementById("search-result");
+    searchResult.textContent = searchProduct ? searchProduct.toString() : "Product not found.";
+  </script>
 </body>
 </html>
