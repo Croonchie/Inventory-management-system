@@ -30,3 +30,8 @@ Product.applyDiscount = function (products, discount) {
     product.price = product.price * (1 - discount);
   });
 };
+
+class Store {
+  constructor() {
+    this.inventory = [];
+  }
